@@ -4,8 +4,12 @@ tasks:
       pip install -r requirements.txt
       git clone https://github.com/HendrikStrobelt/LSTMVis.git
       cd LSTMVis
-      wget -P data/05childbook https://drive.google.com/file/d/0B542UFSlrvMjMHcxWHluNzh3clU/view?usp=sharing
-      wget -P data/05childbook https://drive.google.com/file/d/0B3yX0IkfCkLvWUowazhOZHFuSms/view?usp=sharing&resourcekey=0-JPmD2S5SFne6iTyOzAT3_w
+      sed -i s/8888/8080/ lstm_server.py
+      sed -i s/127.0.0.1/0.0.0.0/ lstm_server.py
+      pip install gdown
+      gdown "https://drive.google.com/uc?export=download&id=0B3yX0IkfCkLvWUowazhOZHFuSms&confirm=t"
+      # wget -P data/05childbook https://drive.google.com/file/d/0B542UFSlrvMjMHcxWHluNzh3clU&export=download
+      # wget -P data/05childbook https://drive.google.com/file/d/0B3yX0IkfCkLvWUowazhOZHFuSms&export=download
       python lstm_server.py -dir data/05childbook 
     openMode: split-right
   - name: jupyter notebook run
@@ -14,5 +18,5 @@ tasks:
       jupyter notebook --generate-config
       echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
       echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py
-      jupyter notebook --ip=* --port 9999
+      jupyter notebook --ip=*
     openMode: split-right
