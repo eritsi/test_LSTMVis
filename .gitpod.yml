@@ -1,0 +1,18 @@
+tasks:
+  - name: install python
+    init: |
+      git clone https://github.com/HendrikStrobelt/LSTMVis.git
+      cd LSTMVis
+      pip install -r requirements.txt
+      wget -P data/05childbook https://drive.google.com/file/d/0B542UFSlrvMjMHcxWHluNzh3clU/view?usp=sharing
+      wget -P data/05childbook https://drive.google.com/file/d/0B3yX0IkfCkLvWUowazhOZHFuSms/view?usp=sharing&resourcekey=0-JPmD2S5SFne6iTyOzAT3_w
+      python lstm_server.py -dir data/05childbook 
+    openMode: split-right
+  - name: jupyter notebook run
+    init: |
+      pip install jupytext openpyxl optuna pandas_gbq scikit-learn lightgbm
+      jupyter notebook --generate-config
+      echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
+      echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py
+      jupyter notebook --ip=*
+    openMode: split-right
